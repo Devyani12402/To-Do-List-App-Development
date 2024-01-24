@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-list-App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="taskManager" class="header">
+        <h2>My Task Manager</h2>
+        <input type="text" id="taskInput" placeholder="Task...">
+        <span onclick="addTask()" class="addBtn">Add Task</span>
+    </div>
+      
+    <ul id="taskList">
+        <li>Go for a run</li>
+        <li class="completed">Pay utility bills</li>
+        <li>Meet with Alex</li>
+        <li>Buy groceries</li>
+        <li>Read a new book</li>
+        <li>Organize home office</li>
+    </ul>
+
+    <script>
+        
+        var taskItems = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < taskItems.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            taskItems[i].appendChild(span);
+        }
+
+        
+        var closeButtons = document.getElementsByClassName("close");
+        for (i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].onclick = function() {
+                var taskItem = this.parentElement;
+                taskItem.style.display = "none";
+            }
+        }
+
+        
+        var taskList = document.querySelector('ul');
+        taskList.addEventListener('click', function(ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('completed');
+            }
+        }, false);
+
+        
+        function addTask() {
+            var taskItem = document.createElement("li");
+            var taskInputValue = document.getElementById("taskInput").value;
+            var taskText = document.createTextNode(taskInputValue);
+            taskItem.appendChild(taskText);
+            if (taskInputValue === '') {
+                alert("⚠ Please enter a task!");
+            } else {
+                document.getElementById("taskList").appendChild(taskItem);
+            }
+            document.getElementById("taskInput").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            taskItem.appendChild(span);
+
+            for (i = 0; i < closeButtons.length; i++) {
+                closeButtons[i].onclick = function() {
+                    var taskItem = this.parentElement;
+                    taskItem.style.display = "none";
+                }
+            }
+        }
+      
+    </script>
+</body>
+</html>
